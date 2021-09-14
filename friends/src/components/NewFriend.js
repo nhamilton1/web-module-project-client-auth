@@ -64,7 +64,9 @@ const NewFriend = (props) => {
             props.history.push('/home')
     }  
 
-
+    if(!isLoading){
+        return <div>loading ...</div>
+    }
     
 
     return (
@@ -106,7 +108,6 @@ const NewFriend = (props) => {
                         <h1>{friend.name}</h1>
                         </div>
                     )
-
                 })
             }
         </div>

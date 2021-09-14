@@ -21,7 +21,7 @@ function App() {
             <Link to="/login">Login</Link>
           </li>
           <li>
-            {isLoggedIn ? <Link to="/friends">New Friend</Link> : <div></div>}
+            {isLoggedIn && <Link to="/friends">New Friend</Link>}
           </li>
           <li>
             {isLoggedIn ? <Link to="/logout">Logout</Link> : <div></div>}
