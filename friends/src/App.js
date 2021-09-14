@@ -11,6 +11,9 @@ function App() {
       <div className="App">
         <ul>
           <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
             <Link to="/login">Login</Link>
           </li>
           <li>
