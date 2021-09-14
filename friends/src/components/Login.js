@@ -10,7 +10,7 @@ const initialFormValues = {
 
 
 
-const Login = () => {
+const Login = (props) => {
 
     const [formValues, setFormValues] = useState(initialFormValues)
 
@@ -26,7 +26,8 @@ const Login = () => {
         axios.post("http://localhost:5000/api/login", formValues)
           .then(resp => {
             console.log(resp);
-            localStorage.setItem("token", resp.data.token);
+            localStorage.setItem("token", resp.data.payload);
+            props.history.push('/friends')
           })
           .catch(err => {
             console.log(err);

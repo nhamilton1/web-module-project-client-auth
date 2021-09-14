@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axiosWithAuth from '../utils/axiosWithAuth'
 
 const initialFormValues = {
@@ -10,12 +10,13 @@ const initialFormValues = {
 
 }
 
-const NewFriend = () => {
+const NewFriend = (props) => {
 
     const [newFriend, setNewFriends] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [formValues, setFormValues] = useState(initialFormValues)
 
+    console.log(newFriend)
 
     const handleChange = e => {
         setFormValues({
@@ -24,10 +25,29 @@ const NewFriend = () => {
         })
       }
 
+
+
+      useEffect(() => {
+        fetchFriends()
+      },[])
+
+
+    const fetchFriends = () => {
+        setIsLoading(true)
+        axiosWithAuth()
+            .get('/friends')
+            .then(res => {
+                setNewFriends(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     const handleSubmit = e => {
         e.preventDefault();
         let makeNewFriend = {
-            id: formValues.id,
+            id: Date.now(),
             name: formValues.name,
             age: formValues.name,
             email: formValues.name,
@@ -41,7 +61,10 @@ const NewFriend = () => {
                 console.log(err)
             })
             setFormValues(initialFormValues)
+            props.history.push('/home')
     }  
+
+
     
 
     return (
@@ -53,6 +76,7 @@ const NewFriend = () => {
                         name='name'
                         value={formValues.name}
                         onChange={handleChange}
+                        placeholder='name'
                     />
                 </label>
                 <label>
@@ -61,6 +85,7 @@ const NewFriend = () => {
                         name='age'
                         value={formValues.age}
                         onChange={handleChange}
+                        placeholder='age'
                     />
                 </label>
                 <label>
@@ -69,9 +94,21 @@ const NewFriend = () => {
                         name='email'
                         value={formValues.email}
                         onChange={handleChange}
+                        placeholder='email'
                     />
                 </label>
+                <button>Submit</button>
             </form>
+            {
+                newFriend.map((friend, index) => {
+                    return(
+                        <div key={index}>
+                        <h1>{friend.name}</h1>
+                        </div>
+                    )
+
+                })
+            }
         </div>
     )
 }
